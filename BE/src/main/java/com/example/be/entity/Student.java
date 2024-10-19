@@ -33,4 +33,7 @@ public class Student extends PrimaryEntity {
     @JoinColumn(name = "personal_infomation_id")
     private PersonalInformation personalInformation;
 
+    @Column(name = "gpa")
+    private Double GPA;
+
 }
