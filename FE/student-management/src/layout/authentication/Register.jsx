@@ -1,4 +1,4 @@
-import {Button, message, Row} from "antd";
+import {Button, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {RegisterApiService} from "../../service/authentication/RegisterServiceApi"
 import {setToken, setRefreshToken, getToken, deleteToken} from "../../helper/UserToken";
@@ -13,7 +13,7 @@ const Register = () => {
                 message.success("Đăng ký thành công!")
                 setTimeout(() => {
                     window.location.href = "/login";
-                }, 2500);
+                }, 1500);
             }).catch((error) => {
                 message.error(error?.response?.data?.message)
             })
@@ -28,11 +28,11 @@ const Register = () => {
         }
     }, [])
     return (
-        <div>
-            <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh'}}>
+        <div style={{backgroundColor: "#C0C0C0"}}>
+            <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                 <div className="container mx-auto px-4"
-                     style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", width: "40%"}}>
-                    <section className="bg-gray-50 dark:bg-gray-900">
+                     style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",borderRadius:"10px", width: "30%",backgroundColor:"white"}}>
+                <section className="bg-gray-50 dark:bg-gray-900">
                         <div
                             className="flex flex-col items-center justify-center px-6 py-8
                             mx-auto md:h-screen lg:py-0">
@@ -45,12 +45,12 @@ const Register = () => {
                                         Register an account
                                     </h1>
                                     <form className="space-y-4 md:space-y-6" action="#">
-                                        <div style={{margin: "20px"}}>
+                                        <Row style={{margin: "20px"}}>
                                             <label style={{margin: "10px"}} htmlFor="email"
                                                    className="block mb-2 text-sm font-medium
                                                    text-gray-900 dark:text-white">User
                                                 name</label>
-                                            <input value={info?.username}
+                                            <Input value={info?.username}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, username: e.target.value}))
                                                    }}
@@ -62,12 +62,12 @@ const Register = () => {
                                                     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    placeholder="User name" required=""/>
 
-                                        </div>
-                                        <div style={{margin: "20px"}}>
+                                        </Row>
+                                        <Row style={{margin: "20px"}}>
                                             <label style={{margin: "10px"}} htmlFor="password"
                                                    className="block mb-2 text-sm
                                                    font-medium text-gray-900 dark:text-white">Password</label>
-                                            <input type="password"
+                                            <Input type="password"
                                                    value={info?.password}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, password: e.target.value}))
@@ -78,7 +78,7 @@ const Register = () => {
                                                     dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                                                     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    required=""/>
-                                        </div>
+                                        </Row>
                                         <Button color="default" variant="solid" onClick={handleRegister}>
                                             Register
                                         </Button>
