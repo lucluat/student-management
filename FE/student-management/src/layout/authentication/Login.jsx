@@ -1,8 +1,7 @@
-import {Button, message, Row} from "antd";
+import {Button, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {LoginServiceApi} from "../../service/authentication/LoginApiService"
 import {setToken, setRefreshToken, getToken, deleteToken} from "../../helper/UserToken";
-
 const Login = () => {
     const [info, setInfo] = useState(null);
     const handleLogin = () => {
@@ -25,11 +24,11 @@ const Login = () => {
         }
     }, [])
     return (
-        <>
-            <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh'}}>
+        <div  style={{backgroundColor:"#C0C0C0"}}>
+            <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                 <div className="container mx-auto px-4"
-                     style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", width: "40%"}}>
-                    <section className="bg-gray-50 dark:bg-gray-900">
+                     style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",borderRadius:"10px", width: "30%",backgroundColor:"white"}}>
+                    <section className="bg-gray-50 dark:bg-gray-900" >
                         <div
                             className="flex flex-col items-center justify-center px-6 py-8
                             mx-auto md:h-screen lg:py-0">
@@ -42,12 +41,12 @@ const Login = () => {
                                         Sign in to your account
                                     </h1>
                                     <form className="space-y-4 md:space-y-6" action="#">
-                                        <div style={{margin: "20px"}}>
+                                        <Row style={{margin: "20px"}}>
                                             <label style={{margin: "10px"}} htmlFor="email"
                                                    className="block mb-2 text-sm font-medium
                                                    text-gray-900 dark:text-white">User
                                                 name</label>
-                                            <input value={info?.username}
+                                            <Input value={info?.username}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, username: e.target.value}))
                                                    }}
@@ -65,12 +64,12 @@ const Login = () => {
                                             }}>
                                                 {/*<span style={{color: "red"}}>{errorUsername}</span>*/}
                                             </Row>
-                                        </div>
-                                        <div style={{margin: "20px"}}>
+                                        </Row>
+                                        <Row style={{margin: "20px"}}>
                                             <label style={{margin: "10px"}} htmlFor="password"
                                                    className="block mb-2 text-sm
                                                    font-medium text-gray-900 dark:text-white">Password</label>
-                                            <input type="password"
+                                            <Input type="password"
                                                    value={info?.password}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, password: e.target.value}))
@@ -89,7 +88,7 @@ const Login = () => {
                                                 {/*<span style={{color: "red"}}>{errorPassword}</span>*/}
                                             </Row>
 
-                                        </div>
+                                        </Row>
                                         <Button color="default" variant="solid" onClick={handleLogin}>
                                             Login
                                         </Button>
@@ -105,7 +104,7 @@ const Login = () => {
                     </section>
                 </div>
             </Row>
-        </>
+        </div>
     )
 }
 
