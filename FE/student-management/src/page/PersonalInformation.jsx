@@ -138,7 +138,8 @@ const PersonalInformation = (prop) => {
         setPersonal({
             studentId: prop?.student?.id,
             gender: 0,
-            relationship: 0
+            relationship: 0,
+            idUpdate: ""
         })
         prop?.setOpenPersonalInformation(false);
         setOpenModalModify(true);

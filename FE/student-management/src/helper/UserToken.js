@@ -1,4 +1,3 @@
-/** @format */
 
 import {jwtDecode} from "jwt-decode";
 import { getCookie, setCookie } from "./cookie";
@@ -61,11 +60,4 @@ export const userToken = () => {
         : null;
 };
 
-export const setAccountUser = (user) => {
-    setCookie("accountUser", user, 1);
-};
-
-export const deleteAccountUser = () => {
-    setCookie("accountUser", "", 1);
-};
 

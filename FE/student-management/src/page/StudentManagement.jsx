@@ -42,7 +42,7 @@ function StudentManagement() {
 
     const showModal = () => {
         clearError();
-        setStudent({gender: 0});
+        setStudent({gender: 0,idUpdate:""});
         setOpen(true);
     };
 

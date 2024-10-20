@@ -1,5 +1,3 @@
-/** @format */
-
 import { deleteToken, getToken, isTokenValid } from "../helper/UserToken";
 
 const AuthGuard = ({ children, levels }) => {
