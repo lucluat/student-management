@@ -2,6 +2,7 @@ package com.example.be.infrastructure.security;
 
 import com.example.be.infrastructure.constant.Role;
 import com.example.be.utils.CorsConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,13 +27,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfiguration {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private CorsConfig corsConfigurationSource;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${allowed.origin}")
     public String ALLOWED_ORIGIN;
