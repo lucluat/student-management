@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "student")
+@Builder
 public class Student extends PrimaryEntity {
 
     @Column(name = "full_name")
@@ -28,10 +30,6 @@ public class Student extends PrimaryEntity {
 
     @Column(name = "gender")
     private Gender gender;
-
-    @ManyToOne
-    @JoinColumn(name = "personal_infomation_id")
-    private PersonalInformation personalInformation;
 
     @Column(name = "gpa")
     private Double GPA;

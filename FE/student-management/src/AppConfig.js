@@ -1,3 +1,3 @@
 export const AppConfig = {
-    apiUrl: process.env.DOMAIN_BACKEND,
+    apiUrl: "http://localhost:1111/api/v1",
 }
