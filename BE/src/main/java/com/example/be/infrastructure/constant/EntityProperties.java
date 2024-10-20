@@ -9,8 +9,4 @@ public final class EntityProperties {
 
     public static final short LENGTH_NAME = 255;
 
-    public static final short LENGTH_PICTURE = 5000;
-
-    public static final short LENGTH_URL = 5000;
-
 }

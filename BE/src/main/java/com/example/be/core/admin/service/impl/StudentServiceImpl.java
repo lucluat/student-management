@@ -8,7 +8,6 @@ import com.example.be.core.common.base.ResponseObject;
 import com.example.be.entity.Student;
 import com.example.be.infrastructure.constant.EntityStatus;
 import com.example.be.infrastructure.constant.Gender;
-import com.example.be.repository.StudentRepository;
 import com.example.be.utils.Helper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,16 @@
 import logo from "../../assets/images/logo.jpeg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {Layout, Row, Menu, Col} from "antd";
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    ProjectOutlined
+    ProjectOutlined,
+    LogoutOutlined
 } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 import React from "react";
+import {deleteToken, getToken} from "../../helper/UserToken";
 
 const {Header: AntHeader, Content} = Layout;
 
@@ -33,11 +35,17 @@ function DashboardAuthUser({children}) {
         };
     }
 
+    useEffect(() => {
+        if (getToken()==""){
+            window.location.href = "/login";
+        }
+    },[])
+
     const items = [
         getItem(
             <Link to="/admin/student-management">
                 <ProjectOutlined style={{marginRight: "8px", marginTop: 7, fontSize: "24px"}}/>
-                <span style={{marginLeft: 10, marginRight: 15,fontSize: "18px"}}>
+                <span style={{marginLeft: 10, marginRight: 15, fontSize: "18px"}}>
                   Quản lý sinh viên
                 </span>
             </Link>,
@@ -81,9 +89,10 @@ function DashboardAuthUser({children}) {
                 </Sider>
             </div>
             <Layout className="pb-14">
-                <AntHeader style={{zIndex: 1000, position: "fixed", width: "100%", backgroundColor: "white"}}>
-                    <Row className="items-center">
-                        <Col span={8}>
+                <AntHeader
+                    style={{zIndex: 1000, position: "fixed", width: "100%", backgroundColor: "white", height: "80px"}}>
+                    <Row className="items-center" style={{display: "flex", justifyContent: "space-between"}}>
+                        <Col span={16}>
                             <Row>
                                 <Col span={2}>
                                     <Link
@@ -104,11 +113,21 @@ function DashboardAuthUser({children}) {
 
                                     <button
                                         className="buttonSlider desktop"
-                                        style={{fontSize:"18px"}}
+                                        style={{fontSize: "18px"}}
                                         onClick={toggleCollapse}>
                                         {collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                                     </button>
                                 </Col>
+                            </Row>
+                        </Col>
+                        <Col style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <Row style={{display: "flex", gap: "10px", alignItems: "center"}}
+                                 onClick={() => {
+                                     deleteToken();
+                                     window.location.href = "/login"
+                                 }}>
+                                <LogoutOutlined style={{fontSize: "24px"}}/>
+                                <h2>Đăng xuất</h2>
                             </Row>
                         </Col>
                     </Row>

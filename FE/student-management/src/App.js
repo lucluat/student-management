@@ -1,9 +1,10 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {AppConfig} from "./AppConfig";
 import AuthGuard from "./guard/AuthGuard";
 import DashBoardAdmin from "./layout/admin/DashBoardAdmin";
 import StudentManagement from "./page/StudentManagement";
+import Login from "./layout/authentication/Login";
+import Register from "./layout/authentication/Register";
 
 function App() {
     return (
@@ -15,9 +16,21 @@ function App() {
                         element={
                             <AuthGuard>
                                 <DashBoardAdmin>
-                                    <StudentManagement />
+                                    <StudentManagement/>
                                 </DashBoardAdmin>
                             </AuthGuard>
+                        }
+                    />
+                    <Route
+                        path="/login"
+                        element={
+                            <Login/>
+                        }
+                    />
+                    <Route
+                        path="/register"
+                        element={
+                            <Register/>
                         }
                     />
                 </Routes>

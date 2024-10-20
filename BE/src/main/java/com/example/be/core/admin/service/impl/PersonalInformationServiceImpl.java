@@ -10,7 +10,6 @@ import com.example.be.entity.Student;
 import com.example.be.infrastructure.constant.EntityStatus;
 import com.example.be.infrastructure.constant.Gender;
 import com.example.be.infrastructure.constant.Relationship;
-import com.example.be.repository.PersonalInformationRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
