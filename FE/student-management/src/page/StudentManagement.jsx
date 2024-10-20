@@ -27,8 +27,11 @@ function StudentManagement() {
         setComponentSize(size);
     };
     const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [page, setPage] = useState({});
     const [dataSearch, setDataSearch] = useState({});
+    const [minGPA, setMinGPA] = useState(0);
+    const [maxGPA, setMaxGPA] = useState({});
     const [open, setOpen] = useState(false);
     const [openPersonalInformation, setOpenPersonalInformation] = useState(false);
     const [student, setStudent] = useState({gender: 0});
@@ -50,31 +53,34 @@ function StudentManagement() {
         setErrorBirthDate("");
     }
 
+    const setErrorMessage = (item) => {
+        switch (item?.fieldError) {
+            case "birthDate":
+                setErrorBirthDate(item?.message);
+                break;
+            case "gpa":
+                setErrorGPA(item?.message);
+                break;
+            case "name":
+                setErrorName(item?.message);
+                break;
+            case "gender":
+                setErrorGender(item?.message);
+                break;
+        }
+    }
+
     const handleOk = () => {
-        console.log(student)
         if (student?.idUpdate == "") {
             StudentServiceApi.addStudent(student).then(response => {
                 message.success("Thêm sinh viên thành công!");
-                handleGetStudents();
+                handleGetStudents(1, dataSearch);
                 setOpen(false);
                 setStudent((prev) => ({...prev, idUpdate: ""}));
             }).catch((error) => {
                 if (error?.response?.data) {
                     for (let item in error?.response?.data) {
-                        switch (error?.response?.data[item].fieldError) {
-                            case "birthDate":
-                                setErrorBirthDate(error?.response?.data[item]?.message);
-                                break;
-                            case "gpa":
-                                setErrorGPA(error?.response?.data[item]?.message);
-                                break;
-                            case "name":
-                                setErrorName(error?.response?.data[item]?.message);
-                                break;
-                            case "gender":
-                                setErrorGender(error?.response?.data[item]?.message);
-                                break;
-                        }
+                        setErrorMessage(error?.response?.data[item]);
                     }
                 }
                 setStudent((prev) => ({...prev, idUpdate: ""}));
@@ -82,26 +88,13 @@ function StudentManagement() {
         } else {
             StudentServiceApi.updateStudent(student).then(response => {
                 message.success("Sửa sinh viên thành công!");
-                handleGetStudents();
+                handleGetStudents(1, dataSearch);
                 setOpen(false);
                 setStudent((prev) => ({...prev, idUpdate: ""}));
             }).catch((error) => {
                 if (error?.response?.data) {
                     for (let item in error?.response?.data) {
-                        switch (error?.response?.data[item].fieldError) {
-                            case "birthDate":
-                                setErrorBirthDate(error?.response?.data[item]?.message);
-                                break;
-                            case "gpa":
-                                setErrorGPA(error?.response?.data[item]?.message);
-                                break;
-                            case "name":
-                                setErrorName(error?.response?.data[item]?.message);
-                                break;
-                            case "gender":
-                                setErrorGender(error?.response?.data[item]?.message);
-                                break;
-                        }
+                        setErrorMessage(error?.response?.data[item]);
                     }
                 }
                 setStudent((prev) => ({...prev, idUpdate: ""}));
@@ -114,11 +107,12 @@ function StudentManagement() {
     };
 
     useEffect(() => {
-        handleGetStudents();
+        handleGetStudents(1, dataSearch);
     }, []);
 
-    function handleGetStudents() {
-        StudentServiceApi.fetchAll(dataSearch).then(response => {
+    function handleGetStudents(newPage, data) {
+        setCurrentPage(newPage);
+        StudentServiceApi.fetchAll({...data, page: newPage}).then(response => {
             setData(response?.data?.data?.content);
             setPage(response?.data?.data);
         })
@@ -127,7 +121,7 @@ function StudentManagement() {
     function confirmDelete(id) {
         StudentServiceApi.deleteStudent(id).then(response => {
             message.success("Xóa thành công!");
-            handleGetStudents();
+            handleGetStudents(1, dataSearch);
         }).catch(error => {
             message.error("Sinh Viên không tồn tại!");
         })
@@ -187,7 +181,7 @@ function StudentManagement() {
             key: 'action',
             width: 200,
             render: (_, record) => (
-                <Space size="middle" >
+                <Space size="middle">
                     <Row style={{display: "flex", gap: "5px"}}>
                         <Tooltip placement="leftTop" title={"Sửa sinh viên"}>
                             <Button color="default"
@@ -250,22 +244,73 @@ function StudentManagement() {
                         onValuesChange={onFormLayoutChange}
                         size={componentSize}
                     >
-                        <Row className="items-center">
-                            <Col span={8}>
-                                <Form.Item label="Input">
-                                    <Input/>
+                        <Row className="items-center" style={{padding: "30px"}}>
+                            <Col span={6}>
+                                <Form.Item label="Tìm kiếm">
+                                    <Input placeholder={"Họ tên/Ngày sinh"}
+                                           defaultValue={dataSearch?.keyword}
+                                           onChange={(e) => {
+                                               setDataSearch((pre) => ({
+                                                   ...pre,
+                                                   keyword: e.target.value
+                                               }))
+                                               handleGetStudents(1, {...dataSearch, keyword: e.target.value});
+                                           }}
+                                    />
                                 </Form.Item>
                             </Col>
-                            <Col span={8}>
-                                <Form.Item label="Input">
-                                    <Input/>
+                            <Col span={6}>
+                                <Form.Item label="Min GPA">
+                                    <InputNumber
+                                        style={{width: "100%"}}
+                                        defaultValue={dataSearch?.minGPA}
+                                        min={0}
+                                        max={maxGPA}
+                                        size={"middle"}
+                                        onChange={(e) => {
+                                            setDataSearch((pre) => ({
+                                                ...pre,
+                                                minGPA: e
+                                            }))
+                                            setMinGPA(e);
+                                            handleGetStudents(1, {...dataSearch, minGPA: e});
+                                        }}
+                                    />
                                 </Form.Item>
                             </Col>
-                            <Col span={8}>
-
-                                <Form.Item label="Select">
-                                    <Select>
-                                        <Select.Option value="demo">Demo</Select.Option>
+                            <Col span={6}>
+                                <Form.Item label="Max GPA">
+                                    <InputNumber
+                                        style={{width: "100%"}}
+                                        min={minGPA}
+                                        max={10}
+                                        size={"middle"}
+                                        defaultValue={dataSearch?.maxGPA}
+                                        onChange={(e) => {
+                                            setDataSearch((pre) => ({
+                                                ...pre,
+                                                maxGPA: e
+                                            }))
+                                            setMaxGPA(e);
+                                            handleGetStudents(1, {...dataSearch, maxGPA: e});
+                                        }}
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={6}>
+                                <Form.Item label="Giới tính">
+                                    <Select
+                                        defaultValue={dataSearch?.gender ? dataSearch?.gender : ""}
+                                        onChange={(e) => {
+                                            setDataSearch((pre) => ({
+                                                ...pre,
+                                                gender: e
+                                            }))
+                                            handleGetStudents(1, {...dataSearch, gender: e});
+                                        }}>
+                                        <Select.Option value="">Tất cả</Select.Option>
+                                        <Select.Option value="0">Nam</Select.Option>
+                                        <Select.Option value="1">Nữ</Select.Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
@@ -305,7 +350,7 @@ function StudentManagement() {
                                 ]}
                             >
                                 <div>
-                                    <Row>
+                                    <Row style={{margin: "10px"}}>
                                         <label>Họ và tên (<span style={{color: "red"}}>*</span>)</label>
                                         <Input value={student?.name}
                                                onChange={(e) => {
@@ -316,7 +361,7 @@ function StudentManagement() {
                                                }}/>
                                         <span style={{color: "red"}}>{errorName}</span>
                                     </Row>
-                                    <Row>
+                                    <Row style={{margin: "10px"}}>
                                         <label>Ngày sinh (<span style={{color: "red"}}>*</span>)</label>
                                         <DatePicker
                                             value={student?.birthDate == null ? null : dayjs(student?.birthDate, "DD/MM/YYYY")}
@@ -338,7 +383,7 @@ function StudentManagement() {
                                             }}/>
                                         <span style={{color: "red"}}>{errorBirthDate}</span>
                                     </Row>
-                                    <Row>
+                                    <Row style={{margin: "10px"}}>
                                         <label>GPA (<span style={{color: "red"}}>*</span>)</label>
                                         <InputNumber value={student?.gpa}
                                                      size="middle"
@@ -352,11 +397,10 @@ function StudentManagement() {
                                                      }}/>
                                         <span style={{color: "red"}}>{errorGPA}</span>
                                     </Row>
-                                    <Row>
+                                    <Row style={{margin: "10px"}}>
                                         <label>Giới tính (<span style={{color: "red"}}>*</span>)</label>
                                         <select
                                             onChange={(e) => {
-                                                console.log(e.target.value);
                                                 setStudent((prev) => ({
                                                     ...prev,
                                                     gender: e.target.value
@@ -381,7 +425,14 @@ function StudentManagement() {
                     </Row>
                     <Table columns={columns} dataSource={data} pagination={false}/>
                     <div style={{display: "flex", justifyContent: "end", alignItems: "center", padding: "30px"}}>
-                        <Pagination simple defaultCurrent={2} total={50}/>
+                        {page?.totalPages > 1 ? <Pagination
+                                simple
+                                onChange={(pageNumber) => {
+                                    handleGetStudents(pageNumber, dataSearch);
+                                    setCurrentPage(pageNumber);
+                                }}
+                                defaultCurrent={currentPage} total={page.totalPages * 10}/> :
+                            null}
                     </div>
                 </div>
             </div>
