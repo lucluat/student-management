@@ -22,10 +22,11 @@ public interface AdStudentRepository extends StudentRepository {
             FROM student s
             WHERE (:#{#request.keyword} IS NULL 
                     OR :#{#request.keyword} LIKE ''
-                    OR :#{#request.keyword} LIKE CONCAT('%', s.full_name, '%')
-                    OR :#{#request.keyword} LIKE CONCAT('%', s.birth_date, '%'))
+                    OR s.full_name LIKE CONCAT('%', :#{#request.keyword} , '%')
+                    OR s.birth_date LIKE CONCAT('%', :#{#request.keyword} , '%'))
             AND (:#{#request.gender} IS NULL OR :#{#request.gender} = s.gender)
             AND (:#{#request.minGPA} IS NULL OR  :#{#request.maxGPA} IS NULL
+                 OR :#{#request.minGPA} >= :#{#request.maxGPA}
                  OR s.gpa between :#{#request.minGPA} and :#{#request.maxGPA})
             AND s.status = 0
             """,countQuery = """
@@ -33,10 +34,11 @@ public interface AdStudentRepository extends StudentRepository {
             FROM student s
             WHERE (:#{#request.keyword} IS NULL 
                    OR :#{#request.keyword} LIKE ''
-                   OR :#{#request.keyword} LIKE CONCAT('%', s.full_name, '%')
-                   OR :#{#request.keyword} LIKE CONCAT('%', s.birth_date, '%'))
+                   OR s.full_name LIKE CONCAT('%', :#{#request.keyword} , '%')
+                   OR s.birth_date LIKE CONCAT('%', :#{#request.keyword} , '%'))
             AND (:#{#request.gender} IS NULL OR :#{#request.gender} = s.gender)
             AND (:#{#request.minGPA} IS NULL OR  :#{#request.maxGPA} IS NULL
+                OR :#{#request.minGPA} >= :#{#request.maxGPA}
                 OR s.gpa between :#{#request.minGPA} and :#{#request.maxGPA})
             AND s.status = 0
             """,nativeQuery = true)

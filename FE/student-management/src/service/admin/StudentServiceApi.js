@@ -5,10 +5,11 @@ export class StudentServiceApi {
     static URL = "admin/student-management";
 
     static fetchAll = (filter) => {
+        let data = {...filter,keyword:filter?.keyword?filter.keyword.trim():null}
         return request({
             method: "GET",
             url: `/${this.URL}`,
-            params: filter,
+            params: data,
         });
     };
 

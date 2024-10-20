@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = Student.builder()
                 .GPA(request.getGpa())
                 .gender(request.getGender() == 0 ? Gender.MALE : Gender.FEMALE)
-                .fullName(request.getName())
+                .fullName(request.getName().trim())
                 .birthDate(request.getBirthDate())
                 .build();
 
@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
                     "Sinh viên không tồn tại!"
             );
         }
-        student.get().setFullName(request.getName());
+        student.get().setFullName(request.getName().trim());
         student.get().setGender(request.getGender() == 0 ? Gender.MALE : Gender.FEMALE);
         student.get().setGPA(request.getGpa());
         student.get().setBirthDate(request.getBirthDate());
