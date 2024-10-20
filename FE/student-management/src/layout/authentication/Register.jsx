@@ -29,61 +29,47 @@ const Register = () => {
     return (
         <div style={{backgroundColor: "#C0C0C0"}}>
             <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-                <div className="container mx-auto px-4"
-                     style={{boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",borderRadius:"10px", width: "30%",backgroundColor:"white"}}>
-                <section className="bg-gray-50 dark:bg-gray-900">
-                        <div
-                            className="flex flex-col items-center justify-center px-6 py-8
-                            mx-auto md:h-screen lg:py-0">
-                            <div
-                                className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0
-                                dark:bg-gray-800 dark:border-gray-700">
-                                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900
-                                    md:text-2xl dark:text-white">
+                <div className="container"
+                     style={{
+                         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                         borderRadius: "10px",
+                         width: "30%",
+                         backgroundColor: "white"
+                     }}>
+                    <section>
+                        <div>
+                            <div>
+                                <div>
+                                    <h1>
                                         Register an account
                                     </h1>
-                                    <form className="space-y-4 md:space-y-6" action="#">
+                                    <form action="#">
                                         <Row style={{margin: "20px"}}>
-                                            <label style={{margin: "10px"}} htmlFor="email"
-                                                   className="block mb-2 text-sm font-medium
-                                                   text-gray-900 dark:text-white">User
+                                            <label style={{margin: "10px"}} htmlFor="email">User
                                                 name</label>
                                             <Input value={info?.username}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, username: e.target.value}))
                                                    }}
                                                    type="email" name="email" id="email"
-                                                   className="bg-gray-50 border border-gray-300
-                                                   text-gray-900 rounded-lg
-                                                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
-                                                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                                                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    placeholder="User name" required=""/>
 
                                         </Row>
                                         <Row style={{margin: "20px"}}>
-                                            <label style={{margin: "10px"}} htmlFor="password"
-                                                   className="block mb-2 text-sm
-                                                   font-medium text-gray-900 dark:text-white">Password</label>
+                                            <label style={{margin: "10px"}} htmlFor="password">Password</label>
                                             <Input type="password"
                                                    value={info?.password}
                                                    onChange={(e) => {
                                                        setInfo((pre) => ({...pre, password: e.target.value}))
                                                    }}
                                                    name="password" id="password" placeholder="••••••••"
-                                                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg
-                                                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
-                                                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                                                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    required=""/>
                                         </Row>
                                         <Button color="default" variant="solid" onClick={handleRegister}>
                                             Register
                                         </Button>
-                                        <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                            You already have an account? <a href="/login"
-                                                                            className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
+                                        <p>
+                                            You already have an account? <a href="/login">Login</a>
                                         </p>
                                     </form>
                                 </div>
