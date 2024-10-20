@@ -1,8 +1,7 @@
 import {Button, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {RegisterApiService} from "../../service/authentication/RegisterServiceApi"
-import {setToken, setRefreshToken, getToken, deleteToken} from "../../helper/UserToken";
-import login from "./Login";
+import {getToken} from "../../helper/UserToken";
 
 const Register = () => {
     const [info, setInfo] = useState(null);

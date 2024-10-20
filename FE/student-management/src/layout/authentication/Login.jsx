@@ -1,7 +1,7 @@
 import {Button, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {LoginServiceApi} from "../../service/authentication/LoginApiService"
-import {setToken, setRefreshToken, getToken, deleteToken} from "../../helper/UserToken";
+import {setToken, setRefreshToken, getToken} from "../../helper/UserToken";
 const Login = () => {
     const [info, setInfo] = useState(null);
     const handleLogin = () => {
