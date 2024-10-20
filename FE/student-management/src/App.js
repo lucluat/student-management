@@ -8,7 +8,7 @@ import StudentManagement from "./page/StudentManagement";
 function App() {
     return (
         <div className="App">
-            <BrowserRouter basename={AppConfig.apiUrl}>
+            <BrowserRouter basename={"/"}>
                 <Routes>
                     <Route
                         path="/admin/student-management"

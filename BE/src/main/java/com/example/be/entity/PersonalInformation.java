@@ -5,6 +5,8 @@ import com.example.be.infrastructure.constant.Gender;
 import com.example.be.infrastructure.constant.Relationship;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +33,7 @@ public class PersonalInformation extends PrimaryEntity {
     @Column(name = "relationship")
     private Relationship relationship;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 }
